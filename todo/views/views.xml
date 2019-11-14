@@ -1,0 +1,58 @@
+<odoo>
+    <data>
+        <record id="todo_task_view_tree" model="ir.ui.view">
+            <field name="name">todo.task.vew_tree</field>
+            <field name="model">todo.task</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <!--          添加字段和视图装饰器的时候别忘了绑定字段,绑定方法-->
+                <tree string="Todo" decoration-danger="is_expired">
+                    <field name="name"></field>
+                    <field name="is_done"></field>
+                    <field name="riqi"></field>
+                    <field name="is_expired" invisible="True"></field>
+                </tree>
+            </field>
+        </record>
+        <record id="todo_category_view_tree" model="ir.ui.view">
+            <field name="name">todo.category.view_tree</field>
+            <field name="model">todo.category</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Todo Category">
+                    <field name="name"/>
+                    <field name="count"/>
+                </tree>
+            </field>
+        </record>
+        <record id="todo_task_view_filter" model="ir.ui.view">
+            <field name="name">todo.task.view_filter</field>
+            <field name="model">todo.task</field>
+            <field name="arch" type="xml">
+                <search string="Todo">
+                    <field name="name"></field>
+                    <field name="category_id"></field>
+                    <separator></separator>
+                    <filter string="未完成" name="undone" domain="[('is_done','=',False)]"></filter>
+                    <filter string="已完成" name="done" domain="[('is_done','=',True)]"></filter>
+                    <separator></separator>
+                    <filter string="代办" name="todo" domain="[('xuanxiang','=','todo')]"></filter>
+                    <filter string="一般" name="yiban" domain="[('xuanxiang','=','yiban')]"></filter>
+                    <filter string="着急" name="zhaoji" domain="[('xuanxiang','=','zhaooji')]"></filter>
+                    <group expand="0" string="分组">
+                        <filter string="分类" name="category_id" domain="[]" context="{'group_by':'category_id'}"/>
+                        <filter string="紧急程度" name="xuanxiang" domain="[]" context="{'group_by':'xuanxiang'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+        <!--服务器动作-->
+        <record id="action_mark_todo_task_done" model="ir.actions.server">
+            <field name="name">标记完成</field>
+            <field name="model_id" ref="model_todo_task"/>
+            <field name="binding_model_id" ref="model_todo_task"/>
+            <field name="state">code</field>
+            <field name="code">records.write({'is_done': True})</field>
+        </record>
+    </data>
+</odoo>

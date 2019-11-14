@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<odoo>
+    <data>
+        <!--        定义主菜单-->
+        <menuitem id="menu_todo" name="练习"></menuitem>
+        <menuitem id="menu_todo_submenu" parent="menu_todo" name="待办事项"></menuitem>
+        <!--        菜单动作定义-->
+        <record id="action_todo_task" model="ir.actions.act_window">
+            <field name="name">待办事项jkj</field>
+            <field name="res_model">todo.task</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="target">current</field>
+
+        </record>
+        <record id="action_todo_category" model="ir.actions.act_window">
+            <field name="name">分类</field>
+            <field name="res_model">todo.category</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="target">current</field>
+        </record>
+        <menuitem action="action_todo_category" id="submenu_todo_category" name="分类"
+                  parent="menu_todo_submenu" sequence="8"/>
+
+        <!--        子菜单定义-->
+        <menuitem action="action_todo_task" id="submenu_todo_task" name="待办事项" parent="menu_todo"
+                  sequence="10"></menuitem>
+    </data>
+</odoo>
